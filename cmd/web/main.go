@@ -28,7 +28,9 @@ type application struct {
 
 func main() {
 	addr := flag.String("addr", ":4000", "The address the server is going to listen on")
-	dsn := flag.String("dsn", "web:pass@/snippet?parseTime=true", "My SQL datasource name")
+	dsn := flag.String("dsn", "web:pass@tcp(mydb:3306)/snippet?parseTime=true", "My SQL datasource name")
+
+	//dsn := flag.String("dsn", "web:pass@tcp/snippet?parseTime=true", "My SQL datasource name")
 
 	flag.Parse()
 
@@ -40,6 +42,10 @@ func main() {
 		os.Exit(1)
 	}
 	defer db.Close()
+
+	//users := models.UserModel{DB: db}
+
+	//users.CreateTable()
 
 	templateCache, err := newTemplateCache()
 	if err != nil {

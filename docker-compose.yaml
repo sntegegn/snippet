@@ -1,0 +1,22 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mydb
+  mydb:
+    image: "mysql"
+    container_name: mydb
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "pass"
+      MYSQL_DATABASE: "snippet"
+      MYSQL_USER: "web"
+      MYSQL_PASSWORD: "pass"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./tables.sql:/docker-entrypoint-initdb.d/schema.sql
